@@ -1,61 +1,75 @@
-# Feux Tricolor
+# Simple Arduino Exercices
 
-Simulation de feux tricolores pour carrefour à deux voies réalisée avec Arduino.
+Collection de petits projets Arduino : feux tricolores, chenillard, capteur de distance et hygromètre.
 
-## Description
+## Projets
 
-Ce projet implémente un contrôleur de feux tricolores à deux phases à l'aide de **6 LEDs** (2 rouges, 2 oranges, 2 vertes) connectées à une carte Arduino. Les feux alternent entre les deux voies avec un cycle de **12 secondes**.
+### 1. Feux Tricolore (`Feux_Tricolore/`)
 
-### Cycle de fonctionnement
+Simulation de feux tricolores pour carrefour à deux voies avec 6 LEDs (2 rouges, 2 oranges, 2 vertes). Cycle de 12 secondes alternant entre les deux voies.
 
-| Étape | Durée | Voie 1 (Rouge, Orange, Verte) | Voie 2 (Rouge, Orange, Verte) |
-|-------|-------|-------------------------------|-------------------------------|
-| 1 | 5 s | 🔴 Rouge | 🟢 Vert |
-| 2 | 1 s | 🔴 Rouge | 🟡 Orange |
-| 3 | 5 s | 🟢 Vert | 🔴 Rouge |
-| 4 | 1 s | 🟡 Orange | 🔴 Rouge |
+| Étape | Durée | Voie 1 | Voie 2 |
+|-------|-------|--------|--------|
+| 1 | 5 s | Rouge | Vert |
+| 2 | 1 s | Rouge | Orange |
+| 3 | 5 s | Vert | Rouge |
+| 4 | 1 s | Orange | Rouge |
 
-## Matériel requis
+**Brochage :** LEDs sur broches 2-4, 11-13.  
+**Fichier :** `feux_tricolor-2.ino` — aucune dépendance.
 
-- 1 carte Arduino (Uno, Nano ou compatible)
-- 6 LEDs (2 rouges, 2 oranges, 2 vertes)
-- 6 résistances (adaptées aux LEDs)
-- 1 breadboard
-- Fils de connexion
+### 2. Chenillard (`Chenillard/`)
 
-## Brochage
+Chenillard à 9 LEDs (broches 2 à 10) qui s'allument une par une en séquence de la broche 9 à la broche 1, puis boucle.
 
-| Variable dans le code | Couleur réelle de la LED | Broche Arduino |
-|-----------------------|--------------------------|----------------|
-| `blue_1` | 🔴 Rouge (voie 1) | 13 |
-| `blue_2` | 🔴 Rouge (voie 2) | 4 |
-| `jaune_1` | 🟡 Orange (voie 1) | 12 |
-| `jaune_2` | 🟡 Orange (voie 2) | 3 |
-| `vert_1` | 🟢 Verte (voie 1) | 11 |
-| `vert_2` | 🟢 Verte (voie 2) | 2 |
+**Fichier :** `chenillard.ino` — aucune dépendance.
 
-> **Note :** Dans le code, la variable `blue` correspond à la couleur **rouge** sur le schéma de câblage (voir l'image `feux_tricolor-2.png`).
+### 3. HC-SR04 Chenillard (`HC-SR04_chenillard/`)
 
-## Installation
+Chenillard à 9 LEDs piloté par un capteur ultrason HC-SR04. La distance mesurée détermine quelle LED s'allume (tranches de ~2,2 cm jusqu'à 18 cm).
 
-1. Ouvrir `feux_tricolor-2.ino` avec l'IDE Arduino.
-2. Brancher la carte Arduino et sélectionner le bon port.
-3. Téléverser le sketch.
+**Brochage :** LEDs sur broches 2-10, HC-SR04 sur Trigger=12, Echo=13.  
+**Dépendance :** bibliothèque [HCSR04](https://www.arduino.cc/reference/en/libraries/hcsr04/).  
+**Fichier :** `capteur_chenillard_continu.ino`
 
-## Dépendances
+### 4. Hygromètre (`Hygrometre/`)
 
-Aucune — le sketch utilise uniquement les fonctions de base de l'API Arduino (`pinMode`, `digitalWrite`, `delay`).
+Système de mesure d'humidité du sol avec transmission série entre deux cartes Arduino :
 
-## Fichiers
+- **Émetteur** (`emetteur_arduino_carte/`) : lit l'humidité sur A1 et l'envoie sur le port série.
+- **Récepteur** (`recepteur_arduino_carte/`) : reçoit la valeur et actionne un servo (broche 9) et un buzzer (broche 2) proportionnellement à l'humidité.
 
-![Schéma de câblage](feux_tricolor-2.png)
+**Dépendance :** bibliothèque [Servo](https://www.arduino.cc/reference/en/libraries/servo/).
 
-| Fichier | Description |
-|---------|-------------|
-| `feux_tricolor-2.ino` | Code source principal |
-| `feux_tricolor-2.png` | Schéma de câblage |
-| `feux_tricolor-2.mp4` | Vidéo de démonstration |
+## Structure du dépôt
+
+```
+Simple_Arduino_Exercices/
+├── Feux_Tricolore/
+│   ├── feux_tricolor-2.ino
+│   ├── feux_tricolor-2.png
+│   └── feux_tricolor-2.mp4
+├── Chenillard/
+│   ├── chenillard.ino
+│   └── chenillard.png
+├── HC-SR04_chenillard/
+│   ├── capteur_chenillard_continu.ino
+│   └── capteur_chenillard.png
+└── Hygrometre/
+    ├── emetteur_arduino_carte/
+    │   └── emetteur_arduino_carte.ino
+    ├── recepteur_arduino_carte/
+    │   └── recepteur_arduino_carte.ino
+    └── schemas.png
+```
+
+## Utilisation
+
+1. Ouvrir le fichier `.ino` du projet souhaité dans l'IDE Arduino.
+2. Brancher la carte et sélectionner le bon port.
+3. Installer les dépendances si nécessaire (via le gestionnaire de bibliothèques).
+4. Téléverser le sketch.
 
 ## Auteur
 
-**YaogoGerard** — gerardwyaogo@gmail.com
+**YaogoGerard**
