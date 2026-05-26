@@ -48,6 +48,8 @@ Aucune — le sketch utilise uniquement les fonctions de base de l'API Arduino (
 
 ## Fichiers
 
+![Schéma de câblage](feux_tricolor-2.png)
+
 | Fichier | Description |
 |---------|-------------|
 | `feux_tricolor-2.ino` | Code source principal |
